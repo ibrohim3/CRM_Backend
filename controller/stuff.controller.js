@@ -164,13 +164,13 @@ const deleteStuff = async (req, res) => {
 // Search Stuff by name or phone number (optional)
 const searchStuff = async (req, res) => {
     try {
-        const { query } = req.query
+        const { query } = req.query;
 
         if (!query || typeof query !== "string") {
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
-                message: "Qidiruv so'rovi yaroqsiz."
-            })
+                message: "Qidiruv so'rovi noto'g'ri."
+            });
         }
 
         const results = await Stuff.find({
@@ -178,24 +178,23 @@ const searchStuff = async (req, res) => {
                 { first_name: { $regex: query, $options: "i" } },
                 { last_name: { $regex: query, $options: "i" } }
             ]
-        })
-
-        if (results.length === 0) {
-            return res.json({ message: "Bunday foydalanuvchi topilmadi" })
-        }
+        });
 
         return res.status(200).json({
             success: true,
+            count: results.length,
             results
-        })
+        });
+
     } catch (error) {
-        console.error("Error fetching users: ", error);
+        console.error("Error searching stuff: ", error);
         return res.status(500).json({
             success: false,
             message: "Server xatosi"
-        })
+        });
     }
-}
+};
+
 module.exports = {
     postRegister,
     getAllStuff,

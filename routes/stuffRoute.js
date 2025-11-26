@@ -6,7 +6,8 @@ const {
     getAllStuff,
     getById,
     updateStuff,
-    deleteStuff
+    deleteStuff,
+    searchStuff
 } = require("../controller/stuff.controller")
 
 // Stuff Regiter
@@ -23,4 +24,8 @@ stuff.patch("/update/:id", updateStuff)
 
 // Delete 
 stuff.delete("/delete/:id", deleteStuff)
+
+// Search
+stuff.get("/search", searchStuff)
+
 module.exports = { stuff }

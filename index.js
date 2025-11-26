@@ -29,4 +29,6 @@ app.listen(PORT, () => {
 
 // Route 
 const { stuff } = require("./routes/stuffRoute")
-app.use("/api", stuff)
+const { group } = require("./routes/groupRoute")
+app.use("/stuff", stuff)
+app.use("/group", group)
