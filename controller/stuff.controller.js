@@ -40,7 +40,167 @@ const postRegister = async (req, res) => {
     }
 }
 
+// Get All Stuff
+const getAllStuff = async (req, res) => {
+    try {
+        const stuffList = await Stuff.find({})
+        if (!stuffList.length) {
+            return res.status(404).json({
+                success: false,
+                message: "Hozircha hech qanday stuff mavjud emas"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Barcha Stuff lar ro'yxati olindi",
+            count: stuffList.length,
+            innerData: stuffList
+        })
 
+    } catch (error) {
+        console.log("error: ", error);
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi: Malumotlar olinmadi"
+        })
+
+    }
+}
+
+// Get By Id
+const getById = async (req, res) => {
+    try {
+        const stuffId = req.params.id
+
+        const stuff = await Stuff.findById(stuffId)
+
+        if (!stuff) {
+            return res.status(404).json({
+                success: false,
+                message: "Bu id bilan stuff topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Stuff topildi",
+            stuff
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server xatosi: ', error,
+        })
+    }
+}
+
+// Update user
+const updateStuff = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            first_name,
+            last_name,
+            phone_number,
+            parol } = req.body
+        const updateData = {
+            first_name,
+            last_name,
+            phone_number,
+            parol
+        }
+        const updatedStuff = await Stuff.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true }
+        )
+
+        if (!updatedStuff) {
+            return res.status(404).json({
+                success: false,
+                message: "Stuff topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Stuff muvaffaqiyatli yangilandi",
+            stuff: updatedStuff
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
+// Delete Suff
+const deleteStuff = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletedStuff = await Stuff.findByIdAndDelete(id)
+
+        if (!deletedStuff) {
+            return res.status(404).json({
+                success: false,
+                message: "Stuff topilmadi"
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Stuff muvaffaqiyatli o'chirildi",
+            data: deletedStuff
+        })
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+// Search Stuff by name or phone number (optional)
+const searchStuff = async (req, res) => {
+    try {
+        const { query } = req.query
+
+        if (!query || typeof query !== "string") {
+            return res.status(404).json({
+                success: false,
+                message: "Qidiruv so'rovi yaroqsiz."
+            })
+        }
+
+        const results = await Stuff.find({
+            $or: [
+                { first_name: { $regex: query, $options: "i" } },
+                { last_name: { $regex: query, $options: "i" } }
+            ]
+        })
+
+        if (results.length === 0) {
+            return res.json({ message: "Bunday foydalanuvchi topilmadi" })
+        }
+
+        return res.status(200).json({
+            success: true,
+            results
+        })
+    } catch (error) {
+        console.error("Error fetching users: ", error);
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi"
+        })
+    }
+}
 module.exports = {
-    postRegister
+    postRegister,
+    getAllStuff,
+    getById,
+    updateStuff,
+    deleteStuff,
+    searchStuff
 }

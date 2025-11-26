@@ -29,4 +29,4 @@ app.listen(PORT, () => {
 
 // Route 
 const { stuff } = require("./routes/stuffRoute")
-app.use("/all", stuff)
+app.use("/api", stuff)
