@@ -93,7 +93,7 @@ const getById = async (req, res) => {
     }
 }
 
-// Update user
+// Update Stuff
 const updateStuff = async (req, res) => {
     try {
         const { id } = req.params
