@@ -48,7 +48,6 @@ const postGroup = async (req, res) => {
         })
     }
 }
-
 // Get all groups
 const getAllGroups = async (req, res) => {
     try {
