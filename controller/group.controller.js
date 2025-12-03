@@ -2,6 +2,7 @@ const { Group } = require("../model/groupSchema")
 
 // Post Group
 const postGroup = async (req, res) => {
+
     try {
         const {
             group_name,

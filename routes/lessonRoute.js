@@ -3,11 +3,13 @@ const lesson = Router()
 
 const {
     postLesson,
-    getAll
+    getAll,
+    getById
 } = require("../controller/lesson.controller")
-const { get } = require("mongoose")
 
 lesson.post("/create", postLesson)
 
 lesson.get("/", getAll)
+
+lesson.get("/getById/:id", getById)
 module.exports = { lesson }

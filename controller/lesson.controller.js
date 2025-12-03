@@ -61,7 +61,72 @@ const getAll = async (req, res) => {
         })
     }
 }
+
+// Get by id
+const getById = async (req, res) => {
+    try {
+        const lessonId = req.params.id
+        const lesson = await Lesson.findById(lessonId)
+
+        if (!lesson) {
+            return res.status(404).json({
+                succes: false,
+                message: "Bu Id bilan lesson topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "Lesson topildi",
+            data: lesson
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
+// Update
+const updateLesson = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            lesson_theme,
+            lesson_number,
+            group_id,
+            lesson_date
+        } = req.body
+        const updateData = {
+            lesson_theme,
+            lesson_number,
+            group_id,
+            lesson_date
+        }
+        const updatedLesson = await Lesson.findByIdAndUpdate(
+            id, updateData, { new: true }
+        )
+        if (!updatedLesson) {
+            return res.status(404).json({
+                succes: false,
+                message: "Lesson topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "Lesson yangilandi",
+            data: updatedLesson
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi"
+        })
+    }
+}
 module.exports = {
     postLesson,
-    getAll
+    getAll,
+    getById
 }
