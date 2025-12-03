@@ -188,6 +188,7 @@ const searchStudent = async (req, res) => {
         })
     }
 }
+
 module.exports = {
     postStudent,
     getAllStudents,
