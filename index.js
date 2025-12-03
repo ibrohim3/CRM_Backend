@@ -30,7 +30,7 @@ app.listen(PORT, () => {
 // Route 
 const { stuff } = require("./routes/stuffRoute")
 const { group } = require("./routes/groupRoute")
-const { student } = require("./routes/studentsRoute")
-app.use("/stuff", stuff)
+const { students } = require("./routes/studentsRoute")
+// app.use("/stuff", stuff)
 app.use("/group", group)
-app.use("/students", student)
+app.use("/students", students)

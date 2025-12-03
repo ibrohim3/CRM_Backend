@@ -1,10 +1,24 @@
 const { Router } = require("express")
-const student = Router()
+const students = Router()
 
 const {
-    postGroup
-} = require("../controller/group.controller")
+    postStudent,
+    getAllStudents,
+    getById,
+    updateStudent,
+    deleteStudent,
+    searchStudent
+} = require("../controller/students.controller")
 
-student.post("/register", postGroup)
+students.post("/register", postStudent)
 
-module.exports = { student }
+students.get("/", getAllStudents)
+
+students.get("/getById/:id", getById)
+
+students.patch("/update/:id", updateStudent)
+
+students.delete("/delete/:id", deleteStudent)
+
+students.get("/search", searchStudent)
+module.exports = { students }
