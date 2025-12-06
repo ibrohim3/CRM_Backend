@@ -6,7 +6,7 @@ const createGroup = async (req, res) => {
         const {
             student_id,
             group_id
-        } = req.boddy
+        } = req.body
         if (!student_id || !group_id) {
             return res.status(400).json({
                 succes: false,
@@ -26,11 +26,38 @@ const createGroup = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             succes: false,
-            message: "Server xatosi"
+            message: "Server xatosi",
+            error: error.message
         })
     }
 }
 
+// Get all
+const getAll = async (req, res) => {
+    try {
+        const studentGroup = await StudentGroup.find({})
+
+        if (!studentGroup || studentGroup.length === 0) {
+            return res.status(404).json({
+                succes: false,
+                message: "Hozircha student group mavjud emas."
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "xamma student group olindi",
+            count: studentGroup.length,
+            studentGroup: studentGroup
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
-    createGroup
+    createGroup,
+    getAll
 }
