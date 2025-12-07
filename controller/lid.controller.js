@@ -150,9 +150,36 @@ const updateLid = async (req, res) => {
         })
     }
 }
+
+// Delete
+const deleteLid = async (req, res) => {
+    try {
+        const lidId = req.params.id
+        const deletedLid = await Lid.findByIdAndDelete(lidId)
+
+        if (!deletedLid) {
+            return res.status(404).json({
+                success: false,
+                message: "lid topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Lid muvaffaqiyatli o'chirildi.",
+            deleted: deletedLid
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createLid,
     getAll,
     getByIdLid,
-    updateLid
+    updateLid,
+    deleteLid
 }
