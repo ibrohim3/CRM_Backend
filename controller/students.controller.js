@@ -1,4 +1,3 @@
-const { get } = require("mongoose");
 const { Students } = require("../model/studentsSchema")
 
 // Post 
