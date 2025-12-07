@@ -4,12 +4,15 @@ const lid = Router()
 const {
     createLid,
     getAll,
-    getById
+    getByIdLid,
+    updateLid
 } = require("../controller/lid.controller")
 
 lid.post("/register", createLid)
 
 lid.get("/", getAll)
 
-lid.get("/getById", getById)
+lid.get("/getById/:id", getByIdLid)
+
+lid.patch("/update/:id", updateLid)
 module.exports = { lid }

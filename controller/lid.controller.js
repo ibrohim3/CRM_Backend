@@ -75,7 +75,7 @@ const getAll = async (req, res) => {
 
 // get by id
 
-const getById = async (req, res) => {
+const getByIdLid = async (req, res) => {
     try {
         const lidId = req.params.id
         const lid = await Lid.findById(lidId)
@@ -99,8 +99,60 @@ const getById = async (req, res) => {
         })
     }
 }
+
+// update
+const updateLid = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            first_name,
+            last_name,
+            phone_number,
+            lid_stage_id,
+            test_date,
+            trial_lesson_date,
+            trial_lesson_time,
+            trial_lesson_group_id,
+            lid_status_id,
+            cancel_reson_id
+        } = req.body
+        const updateData = {
+            first_name,
+            last_name,
+            phone_number,
+            lid_stage_id,
+            test_date,
+            trial_lesson_date,
+            trial_lesson_time,
+            trial_lesson_group_id,
+            lid_status_id,
+            cancel_reson_id
+        }
+        const updatedLid = await Lid.findByIdAndUpdate(
+            id, updateData, { new: true }
+        )
+        if (!updatedLid) {
+            return res.status(404).json({
+                success: false,
+                message: "Lid topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Lid yangilandi",
+            updated: updatedLid
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi:",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createLid,
     getAll,
-    getById
+    getByIdLid,
+    updateLid
 }
