@@ -6,7 +6,8 @@ const {
     getAll,
     getByIdLid,
     updateLid,
-    deleteLid
+    deleteLid,
+    searchLid
 } = require("../controller/lid.controller")
 
 lid.post("/register", createLid)
@@ -18,4 +19,6 @@ lid.get("/getById/:id", getByIdLid)
 lid.patch("/update/:id", updateLid)
 
 lid.delete("/delete/:id", deleteLid)
+
+lid.get("/search", searchLid)
 module.exports = { lid }
