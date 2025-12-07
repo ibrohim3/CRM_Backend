@@ -3,10 +3,19 @@ const studentGroup = Router()
 
 const {
     createGroup,
-    getAll
+    getAll,
+    getById,
+    studentGroupUpdate,
+    studentGroupDelete
 } = require("../controller/student_group.controller")
 
 studentGroup.post("/create", createGroup)
 
 studentGroup.get("/getAll", getAll)
+
+studentGroup.get("/getById/:id", getById)
+
+studentGroup.patch("/update/:id", studentGroupUpdate)
+
+studentGroup.delete("/delete/:id", studentGroupDelete)
 module.exports = { studentGroup }

@@ -57,7 +57,98 @@ const getAll = async (req, res) => {
         })
     }
 }
+
+// Get Id 
+const getById = async (req, res) => {
+    try {
+        const studentGroupId = req.params.id
+
+        const studentGroup = await StudentGroup.findById(studentGroupId)
+
+        if (!StudentGroup) {
+            return res.status(404).json({
+                succes: false,
+                message: "Student Group topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "Student group topilid",
+            data: studentGroup
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi, ", error
+        })
+    }
+}
+
+// Update
+const studentGroupUpdate = async (req, res) => {
+    try {
+
+        const { id } = req.params
+        const {
+            student_id,
+            group_id
+        } = req.body
+        const updateData = {
+            student_id,
+            group_id
+        }
+        const updatedStudentGroup = await StudentGroup.findByIdAndUpdate(
+            id, updateData, { new: true }
+        )
+        if (!updatedStudentGroup) {
+            return res.status(404).json({
+                succes: false,
+                message: "Student Group topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "yangilandi",
+            updated: updatedStudentGroup
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi: ",
+            error: error.message
+        })
+    }
+}
+
+// Delete
+const studentGroupDelete = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletedStudentGroup = await StudentGroup.findByIdAndDelete(id)
+
+        if (!deletedStudentGroup) {
+            return res.status(404).json({
+                succes: false,
+                message: "Topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "O'chirildi",
+            deleted: deletedStudentGroup
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createGroup,
-    getAll
+    getAll,
+    getById,
+    studentGroupUpdate,
+    studentGroupDelete
 }
