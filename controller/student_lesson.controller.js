@@ -88,8 +88,92 @@ const getByIdStLesson = async (req, res) => {
         })
     }
 }
+
+// Update
+const updateStLesson = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const allowedFields = [
+            "lesson_id",
+            "student_id",
+            "is_there",
+            "reason",
+            "be_paid"
+        ];
+
+        const updateData = {};
+        for (const key of allowedFields) {
+            if (req.body[key] !== undefined) {
+                updateData[key] = req.body[key];
+            }
+        }
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Yangilanish uchun hech qanday ma’lumot kelmadi"
+            });
+        }
+
+        const updatedStLesson = await StudentLesson.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true }
+        );
+
+        if (!updatedStLesson) {
+            return res.status(404).json({
+                success: false,
+                message: "Student Lesson topilmadi"
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Muvaffaqiyatli yangilandi",
+            updated: updatedStLesson
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        });
+    }
+};
+
+// Delete
+const deleteStLesson = async (req, res) => {
+    try {
+        const { id } = req.params
+        const deletedStLesson = await StudentLesson.findByIdAndDelete(id)
+
+        if (!deletedStLesson) {
+            return res.status(404).json({
+                succes: false,
+                message: "Topilmadi"
+            })
+        }
+        return res.status(200).json({
+            succes: true,
+            message: "O'chirildi",
+            deleted: deletedStLesson
+        })
+    } catch (error) {
+        return res.status(500).json({
+            succes: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     stLessonCreate,
     getAllStudentLesson,
-    getByIdStLesson
+    getByIdStLesson,
+    updateStLesson,
+    deleteStLesson,
 }
