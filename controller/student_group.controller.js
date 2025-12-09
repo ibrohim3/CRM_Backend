@@ -65,7 +65,7 @@ const getById = async (req, res) => {
 
         const studentGroup = await StudentGroup.findById(studentGroupId)
 
-        if (!StudentGroup) {
+        if (!studentGroup) {
             return res.status(404).json({
                 succes: false,
                 message: "Student Group topilmadi"
