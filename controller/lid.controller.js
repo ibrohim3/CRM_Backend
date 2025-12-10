@@ -17,7 +17,7 @@ const createLid = async (req, res) => {
         } = req.body
         if (!first_name || !phone_number) {
             return res.status(400).json({
-                success: fa,
+                success: false,
                 message: "Maydonlar to'ldirilmadi"
             })
         } else {

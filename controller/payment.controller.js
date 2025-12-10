@@ -36,7 +36,6 @@ const createPayment = async (req, res) => {
     }
 };
 
-
 // GET ALL
 const getPayments = async (req, res) => {
     try {
@@ -55,7 +54,6 @@ const getPayments = async (req, res) => {
         });
     }
 };
-
 
 // GET ONE
 const getPayment = async (req, res) => {
@@ -84,7 +82,6 @@ const getPayment = async (req, res) => {
         });
     }
 };
-
 
 // UPDATE
 const updatePayment = async (req, res) => {
@@ -135,7 +132,6 @@ const updatePayment = async (req, res) => {
     }
 };
 
-
 // DELETE
 const deletePayment = async (req, res) => {
     try {
@@ -152,7 +148,8 @@ const deletePayment = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "O'chirildi"
+            message: "O'chirildi",
+            removed: removed
         });
 
     } catch (error) {
@@ -163,7 +160,6 @@ const deletePayment = async (req, res) => {
         });
     }
 };
-
 
 module.exports = {
     createPayment,
