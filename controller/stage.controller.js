@@ -110,9 +110,36 @@ const updateStage = async (req, res) => {
         })
     }
 }
+
+// Delete
+const deleteStage = async (req, res) => {
+    try {
+        const { id } = req.params
+        const removed = await Stage.findByIdAndDelete(id)
+
+        if (!removed) {
+            return res.status(404).json({
+                success: false,
+                message: "Stage topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "O'chirildi",
+            removed: removed
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createStage,
     getStages,
     getStage,
-    updateStage
+    updateStage,
+    deleteStage
 }

@@ -5,7 +5,8 @@ const {
     createStage,
     getStages,
     getStage,
-    updateStage
+    updateStage,
+    deleteStage
 } = require("../controller/stage.controller")
 
 stage.post("/register", createStage)
@@ -15,4 +16,6 @@ stage.get("/", getStages)
 stage.get("/byId/:id", getStage)
 
 stage.patch("/update/:id", updateStage)
+
+stage.delete("/delete/:id", deleteStage)
 module.exports = { stage }
