@@ -85,8 +85,100 @@ const getBranch = async (req, res) => {
         })
     }
 }
+
+// Update
+const updateBranch = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            name,
+            call_number
+        } = req.body
+        const updateData = {
+            name,
+            call_number
+        }
+        const updatedBranch = await Branch.findByIdAndUpdate(
+            id, updateData, { new: true }
+        )
+        if (!updatedBranch) {
+            return res.status(404).json({
+                success: false,
+                message: "Branch topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Branch yangilandi",
+            updated: updatedBranch
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
+// delete
+const deleteBranch = async (req, res) => {
+    try {
+        const { id } = req.params
+        const removed = await Branch.findByIdAndDelete(id)
+        if (!removed) {
+            return res.status(404).json({
+                success: false,
+                message: "Branch topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Branch o'chirildi",
+            removed: removed
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi:",
+            error: error.message
+        })
+    }
+}
+
+// Search
+const searchBranch = async (req, res) => {
+    try {
+        const { q } = req.query
+        if (!q || typeof q !== "string") {
+            return res.status(400).json({
+                success: false,
+                message: "Qidiruv so'rovi noto'g'ri"
+            })
+        }
+        const results = await Branch.find({
+            $or: [
+                { name: { $regex: q, $options: "i" } }
+            ]
+        })
+        return res.status(200).json({
+            success: true,
+            count: results.length,
+            results
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     createBranch,
     getBranches,
-    getBranch
+    getBranch,
+    updateBranch,
+    deleteBranch,
+    searchBranch
 }
