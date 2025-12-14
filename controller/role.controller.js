@@ -113,9 +113,73 @@ const updateRole = async (req, res) => {
         })
     }
 }
+
+// delete
+const deleteRole = async (req, res) => {
+    try {
+        const { id } = req.params
+        const removed = await Role.findByIdAndDelete(id)
+        if (!removed) {
+            return res.status(404).json({
+                success: false,
+                message: "Role topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Role muvaffaqiyatli o'chirildi",
+            removed: removed
+        })
+    } catch (error) {
+        console.error("Role o'chirishda xato yuzaga keldi: ", error);
+        return res.status(500).json({
+            success: false,
+            message: "Srver xatosi",
+            error: error.message
+        })
+    }
+}
+
+// Search
+const searchRole = async (req, res) => {
+    try {
+        const { q } = req.query
+        if (!q || typeof q !== "string") {
+            return res.status(400).json({
+                success: false,
+                message: "Qidiruv so'rovi noto'g'ri"
+            })
+        }
+        const results = await Role.find({
+            $or: [
+                { name: { $regex: q.trim(), $options: "i" } }
+            ]
+        })
+        if (!results || results.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "So'rov bo'yicha xechnima topilmadi."
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Topildi",
+            count: results.length,
+            data: results
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: " Server xatosi",
+            error: error.message
+        })
+    }
+}
 module.exports = {
     postRole,
     getRoles,
     getOneRole,
-    updateRole
+    updateRole,
+    deleteRole,
+    searchRole
 }
