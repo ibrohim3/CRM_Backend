@@ -57,7 +57,95 @@ const getStuffRoles = async (req, res) => {
         })
     }
 }
+
+// Get one
+const getStuffRole = async (req, res) => {
+    try {
+        const stuffRoleId = req.params.id
+        const stuffRole = await StuffRole.findById(stuffRoleId)
+        if (!stuffRole || stuffRole.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Stuff role topilmadi."
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            data: stuffRole
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server xatosi',
+            error: error.message
+        })
+    }
+}
+
+// Update
+const updateStuffRole = async (req, res) => {
+    try {
+        const { id } = req.params
+        const {
+            stuff_id,
+            role_id
+        } = req.body
+        const updateData = {
+            stuff_id,
+            role_id
+        }
+        const updatedStuffRole = await StuffRole.findByIdAndUpdate(
+            id, updateData, { new: true }
+        )
+        if (!updatedStuffRole) {
+            return res.status(404).json({
+                success: false,
+                message: "Stuff role topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "muvaffaqiyatli yangilandi",
+            updated: updatedStuffRole
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
+// Delete
+const deleteStuffRole = async (req, res) => {
+    try {
+        const { id } = req.params
+        const removed = await StuffRole.findByIdAndDelete(id)
+        if (!removed) {
+            return res.status(404).json({
+                success: false,
+                message: "Stuff role topilmadi"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message: "Muvaffaqiyatli o'chirildi",
+            removed: removed
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Server xatosi",
+            error: error.message
+        })
+    }
+}
+
 module.exports = {
     createStuffRole,
-    getStuffRoles
+    getStuffRoles,
+    getStuffRole,
+    updateStuffRole,
+    deleteStuffRole
 }

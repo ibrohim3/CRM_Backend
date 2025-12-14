@@ -74,7 +74,6 @@ const getAll = async (req, res) => {
 }
 
 // get by id
-
 const getByIdLid = async (req, res) => {
     try {
         const lidId = req.params.id
