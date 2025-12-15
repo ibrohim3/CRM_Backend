@@ -16,7 +16,7 @@ const {
     idParamValidationSchema,
     searchValidationSchema
 } = require("../validation/common.validation.js")
-const validate = require("../middlewares/validate.js")
+const { validate } = require("../middlewares/validate.js")
 
 
 branch.post("/register", validate(createBranchValidation), createBranch)
