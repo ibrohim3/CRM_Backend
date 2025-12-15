@@ -48,6 +48,7 @@ const getBranches = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Branches topildi",
+            count: branches.length,
             data: branches
         })
     } catch (error) {
