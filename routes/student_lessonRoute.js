@@ -1,6 +1,5 @@
 const { Router } = require("express")
 const stLesson = Router()
-
 const {
     stLessonCreate,
     getAllStudentLesson,
@@ -8,15 +7,14 @@ const {
     updateStLesson,
     deleteStLesson,
 } = require("../controller/student_lesson.controller")
+const { validate } = require("../middlewares/validate.js")
+const { createStudentLessonValidation, updateStudentLessonValidation } = require("../validation/studentLesson.validation.js")
+const { idParamValidationSchema } = require("../validation/common.validation.js")
 
-stLesson.post("/register", stLessonCreate)
-
+stLesson.post("/register", validate(createStudentLessonValidation, "body"), stLessonCreate)
 stLesson.get("/", getAllStudentLesson)
-
-stLesson.get("/getById/:id", getByIdStLesson)
-
-stLesson.patch("/update/:id", updateStLesson)
-
-stLesson.delete("/delete/:id", deleteStLesson)
+stLesson.get("/getById/:id", validate(idParamValidationSchema, "params"), getByIdStLesson)
+stLesson.patch("/update/:id", validate(updateStudentLessonValidation, "body"), updateStLesson)
+stLesson.delete("/delete/:id", validate(idParamValidationSchema, "params"), deleteStLesson)
 
 module.exports = { stLesson }
