@@ -24,7 +24,7 @@ connectToDb()
 // Server
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`Server ishga tushdi shu portda http://localhost:${PORT}`);
+    console.log(`Server shu portda ishga tushdi http://localhost:${PORT}`);
 })
 
 // Route 
