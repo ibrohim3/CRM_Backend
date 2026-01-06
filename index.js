@@ -2,7 +2,7 @@ const express = require("express")
 const { connect } = require("mongoose")
 const cors = require("cors")
 require("dotenv").config()
-
+const { swaggerSpec, swaggerUi } = require("./swagger/Swagger")
 const app = express()
 
 // Middlewere
@@ -56,3 +56,4 @@ app.use("/reason", reason)
 app.use("/role", role)
 app.use("/stuff-role", stuffRole)
 app.use("/group-staff", groupStuff)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))
