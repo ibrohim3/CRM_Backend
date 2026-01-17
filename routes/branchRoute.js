@@ -99,8 +99,63 @@ branch.get("/", getBranches)
  */
 branch.get("/:id", validate(idParamValidationSchema), getBranch)
 
+/**
+ * @swagger
+ * /branch/{id}:
+ *   patch:
+ *     summary: Branch malumotini yangilash
+ *     tags:
+ *       - Branch
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Yangilanishi kk bolagan branch ID sini kirit
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema: 
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               call_number: 
+ *                 type: string
+ *     responses:
+ *       200: 
+ *         description: Malumot muvaffaqiyatli yangilandi
+ *       404: 
+ *         description: Malumot topilmadi
+ *       500:   
+ *         description: Server xatosi
+ */
 branch.patch("/:id", validate(updateBranchValidation), updateBranch)
 
+/**
+ * @swagger
+ * /branch/{id}:
+ *   delete:
+ *     summary: Branch malumotlarini o'chirish
+ *     tags: 
+ *       - Branch
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Branch ID
+ *     responses:
+ *       200: 
+ *         description: Branch malumoti o'chirildi
+ *       404: 
+ *         description: Malumot topilmadi
+ *       500: 
+ *         description: Server xatosi 
+ */
 branch.delete("/:id", validate(idParamValidationSchema), deleteBranch)
 
 // branch.get("/search", validate(searchValidationSchema), searchBranch)
