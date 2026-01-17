@@ -75,11 +75,33 @@ branch.post("/", validate(createBranchValidation), createBranch)
  */
 branch.get("/", getBranches)
 
+/**
+ * @swagger
+ * /branch/{id}:
+ *  get:
+ *    summary: Branchni ID si bn olish
+ *    tags:
+ *      - Branch
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: Branch ID si
+ *    responses:
+ *      200: 
+ *        description: Branch malumoti olindi
+ *      404: 
+ *        description: Branch malumoti topilmadi
+ *      500: 
+ *        description: server xatosi
+ */
 branch.get("/:id", validate(idParamValidationSchema), getBranch)
 
 branch.patch("/:id", validate(updateBranchValidation), updateBranch)
 
 branch.delete("/:id", validate(idParamValidationSchema), deleteBranch)
 
-branch.get("/search", validate(searchValidationSchema), searchBranch)
+// branch.get("/search", validate(searchValidationSchema), searchBranch)
 module.exports = { branch }
