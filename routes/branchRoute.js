@@ -22,7 +22,7 @@ const { validate } = require("../middlewares/validate.js")
  * @swagger
  * tags: 
  *   - name: Branch
-    *     description: Branch
+ *     description: Branch
  */
 /**
  * @swagger
