@@ -162,6 +162,27 @@ group.get("/:id", validate(idParamValidationSchema, "params"), getById)
 group.patch("/:id", validate(updateGroupValidation, "body"), updateGroup)
 
 // Delete group
+/**
+ * @swagger
+ * /group/{id}:
+ *   delete:
+ *     summary: Group o'chirish
+ *     tags:
+ *       - Group
+ *     parameters: 
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Group ID
+ *     responses:   
+ *       200:
+ *         description: Muvaffaqiyatli o'chirildi
+ *       404:
+ *         description: Topilmadi
+ *       500: 
+ *         description: Server xatosi
+ *  
+ */
 group.delete("/:id", validate(idParamValidationSchema, "params"), deleteGroup)
 
 // Search group
