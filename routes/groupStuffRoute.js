@@ -96,38 +96,38 @@ groupStuff.get("/:id", validate(idParamValidationSchema, "params"), getGroupStuf
 /**
  * @swagger
  * /group-staff/{id}:
- *   patch:
- *     summary: Yangilash
- *     tags:
- *       - GroupStuff
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - group_id
- *               - stuff_id
- *             properties:
- *               group_id:
- *                 type: string
- *               stuff_id:
- *                 type: string
+ *  patch:
+ *    summary: Yangilash
+ *    tags:
+ *      - GroupStuff
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: ID
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            required:
+ *              - group_id
+ *              - stuff_id
+ *            properties:
+ *              group_id:
+ *                type: string
+ *              stuff_id:
+ *                type: string
  *    responses:
- *      200:
- *        description: Yangilandi
- *      404: 
- *        description: Topilmadi
- *      500: 
- *        description: Server error              
+ *     200:
+ *       description: Yangilandi
+ *     404: 
+ *       description: Topilmadi
+ *     500: 
+ *       description: Server error              
  */
 groupStuff.patch("/:id", validate(updateGroupStuffValidation, "body"), updateGroupStaff)
 
@@ -145,7 +145,7 @@ groupStuff.patch("/:id", validate(updateGroupStuffValidation, "body"), updateGro
  *         schema:
  *           type: object
  *         description: ID
- *    responses:
+ *     responses:
  *      200:
  *        description: O'chirildi
  *      404:
