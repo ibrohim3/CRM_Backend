@@ -12,9 +12,84 @@ const { validate } = require("../middlewares/validate")
 const { createGroupStuffValidation, updateGroupStuffValidation } = require("../validation/groupStuff.validation")
 const { idParamValidationSchema } = require("../validation/common.validation.js")
 
-groupStuff.post("/create", validate(createGroupStuffValidation, "body"), createGroupStuff)
+/**
+ * @swagger
+ * tags:
+ *   - name: GroupStuff
+ *     description: Group Stuff management
+ */
+
+/**
+ * @swagger
+ * /group-staff:
+ *   post:
+ *     summary: Group stuff qo‘shish
+ *     tags:
+ *       - GroupStuff
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - group_id
+ *               - stuff_id
+ *             properties:
+ *               group_id:
+ *                 type: string
+ *                 example: "65c1a9f0e3b4d9a123456789"
+ *               stuff_id:
+ *                 type: string
+ *                 example: "65c1aa12e3b4d9a987654321"
+ *     responses:
+ *       201:
+ *         description: Created successfully
+ *       400:
+ *         description: Validation error
+ *       500:
+ *         description: Server error
+ */
+groupStuff.post("/", validate(createGroupStuffValidation, "body"), createGroupStuff)
+
+/**
+ * @swagger
+ * /group-staff:
+ *   get:
+ *     summary: Barcha malumotni olish
+ *     tags:
+ *       - GroupStuff
+ *     responses:
+ *       200:
+ *         description: Malumot olindi
+ *       404:
+ *         description: Malumot topilmadi
+ *       500:
+ *         description: Server xatosi
+ */
 groupStuff.get("/", getAllGroupStuff)
-groupStuff.get("/getById/:id", validate(idParamValidationSchema, "params"), getGroupStuff)
-groupStuff.patch("/update/:id", validate(updateGroupStuffValidation, "body"), updateGroupStaff)
-groupStuff.delete("/delete/:id", validate(idParamValidationSchema, "params"), deleteGroupStaff)
+
+/**
+ * @swagger
+ * /group-staff/{id}:
+ *   get:
+ *     summary: ID bn olish
+ *     tags: 
+ *       - GroupStuff
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID
+ *     responses: 
+ *       200: 
+ *         description: Muvaffaqiyatli olindi
+ *       404: 
+ *         description: Topilmadi
+ *       500:
+ *         description: Server xatosi
+ */
+groupStuff.get("/:id", validate(idParamValidationSchema, "params"), getGroupStuff)
+groupStuff.patch("/:id", validate(updateGroupStuffValidation, "body"), updateGroupStaff)
+groupStuff.delete("/:id", validate(idParamValidationSchema, "params"), deleteGroupStaff)
 module.exports = { groupStuff }
