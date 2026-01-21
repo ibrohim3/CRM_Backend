@@ -14,16 +14,16 @@ const { createStuffValidation, updateStuffValidation } = require("../validation/
 const { idParamValidationSchema, searchValidationSchema } = require("../validation/common.validation.js")
 
 // Stuff Regiter
-stuff.post("/stuffRegister", validate(createStuffValidation, "body"), postRegister)
+stuff.post("/", validate(createStuffValidation, "body"), postRegister)
 // Get All Stuff
-stuff.get("/getAllStuff", getAllStuff)
+stuff.get("/", getAllStuff)
 // Get By Id
-stuff.get("/getById/:id", validate(idParamValidationSchema, "params"), getById)
+stuff.get("/:id", validate(idParamValidationSchema, "params"), getById)
 // Update Stuff
-stuff.patch("/update/:id", validate(updateStuffValidation, "body"), updateStuff)
+stuff.patch("/:id", validate(updateStuffValidation, "body"), updateStuff)
 // Delete 
-stuff.delete("/delete/:id", validate(idParamValidationSchema, "params"), deleteStuff)
+stuff.delete("/:id", validate(idParamValidationSchema, "params"), deleteStuff)
 // Search
-stuff.get("/search", validate(searchValidationSchema, "query"), searchStuff)
+// stuff.get("/search", validate(searchValidationSchema, "query"), searchStuff)
 
 module.exports = { stuff }

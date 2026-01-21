@@ -29,13 +29,15 @@ const postRegister = async (req, res) => {
             await newStuff.save()
             return res.status(201).json({
                 success: true,
-                message: "Ro'yxatdan o'tish muvaffaqiyatli yakunlandi"
+                message: "Ro'yxatdan o'tish muvaffaqiyatli yakunlandi",
+                newStuff
             })
         }
     } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Server xatosi "
+            message: "Server xatosi ",
+            error: error.message
         })
     }
 }
