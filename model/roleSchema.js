@@ -4,5 +4,5 @@ const roleSchema = new Schema({
     name: { type: String, require: true }
 })
 
-const Role = model("role", roleSchema)
+const Role = model("Role", roleSchema)
 module.exports = { Role }

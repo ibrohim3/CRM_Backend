@@ -121,7 +121,8 @@ const updateLesson = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             succes: false,
-            message: "Server xatosi"
+            message: "Server xatosi",
+            error: error.message
         })
     }
 }

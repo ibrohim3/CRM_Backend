@@ -5,5 +5,5 @@ const studentGroupSchema = new Schema({
     group_id: { type: Number, required: true }
 })
 
-const StudentGroup = model("studentGroup", studentGroupSchema)
+const StudentGroup = model("StudentGroup", studentGroupSchema)
 module.exports = { StudentGroup }

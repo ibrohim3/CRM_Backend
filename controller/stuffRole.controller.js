@@ -14,8 +14,8 @@ const createStuffRole = async (req, res) => {
             })
         } else {
             const newStuffRole = new StuffRole({
-                stuff_id,
-                role_id
+                stuff_id: stuff._id,
+                role_id: role._id
             })
             await newStuffRole.save()
             return res.status(201).json({
@@ -37,7 +37,7 @@ const createStuffRole = async (req, res) => {
 // Get all
 const getStuffRoles = async (req, res) => {
     try {
-        const stuffRoles = await StuffRole.find({})
+        const stuffRoles = await StuffRole.find({ stuff: stuff_.id }).populate("role")
         if (!stuffRoles || stuffRoles.length === 0) {
             return res.status(404).json({
                 success: false,

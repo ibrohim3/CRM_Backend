@@ -9,5 +9,5 @@ const paymentSchema = new Schema({
     total_attent: { type: Number, required: true }
 })
 
-const Payment = model("payment", paymentSchema)
+const Payment = model("Payment", paymentSchema)
 module.exports = { Payment }

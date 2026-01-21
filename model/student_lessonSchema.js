@@ -8,5 +8,5 @@ const studentLessonSchema = new Schema({
     be_paid: { type: Boolean }
 })
 
-const StudentLesson = model("studentLesson", studentLessonSchema)
+const StudentLesson = model("StudentLesson", studentLessonSchema)
 module.exports = { StudentLesson }

@@ -9,5 +9,5 @@ const stuffSchema = new Schema({
     is_active: { type: Boolean, default: true }
 })
 
-const Stuff = model("stuff", stuffSchema)
+const Stuff = model("Stuff", stuffSchema)
 module.exports = { Stuff }

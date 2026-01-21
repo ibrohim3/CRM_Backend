@@ -13,5 +13,5 @@ const groupSchema = new Schema({
     is_active: { type: Boolean, default: true }
 })
 
-const Group = model("group", groupSchema)
+const Group = model("Group", groupSchema)
 module.exports = { Group }

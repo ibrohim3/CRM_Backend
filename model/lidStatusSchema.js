@@ -8,5 +8,5 @@ const lidStatusSchema = new Schema({
     }
 }, { timestamps: true })
 
-const LidStatus = model("lidStatus", lidStatusSchema)
+const LidStatus = model("LidStatus", lidStatusSchema)
 module.exports = { LidStatus }

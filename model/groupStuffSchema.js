@@ -4,5 +4,5 @@ const groupStuffSchema = new Schema({
     stuff_id: { type: String, required: true, unique: true }
 })
 
-const GroupStuff = model("groupStuff", groupStuffSchema)
+const GroupStuff = model("GroupStuff", groupStuffSchema)
 module.exports = { GroupStuff }

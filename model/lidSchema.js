@@ -13,5 +13,5 @@ const lidSchema = new Schema({
     cancel_reson_id: { type: Number, required: true }
 })
 
-const Lid = model("lid", lidSchema)
+const Lid = model("Lid", lidSchema)
 module.exports = { Lid }

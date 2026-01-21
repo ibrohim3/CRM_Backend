@@ -143,7 +143,7 @@ groupStuff.patch("/:id", validate(updateGroupStuffValidation, "body"), updateGro
  *         name: id
  *         required: true
  *         schema:
- *           type: object
+ *           type: string
  *         description: ID
  *     responses:
  *      200:

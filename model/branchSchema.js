@@ -6,5 +6,5 @@ const branchSchema = new Schema({
     call_number: { type: String, required: true }
 })
 
-const Branch = model("model", branchSchema)
+const Branch = model("Model", branchSchema)
 module.exports = { Branch }
