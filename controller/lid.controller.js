@@ -36,7 +36,8 @@ const createLid = async (req, res) => {
             await newLid.save()
             return res.status(201).json({
                 success: true,
-                message: "new lid qo'shildi"
+                message: "new lid qo'shildi",
+                newLid
             })
         }
     } catch (error) {
