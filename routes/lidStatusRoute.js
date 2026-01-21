@@ -56,4 +56,85 @@ lidStatus.post("/", createLidStatus)
  *        description: Server xatosi
  */
 lidStatus.get("/", getAllLidStatuses)
+
+/**
+ * @swagger
+ * /lid-status/{id}:
+ *   get:
+ *     summary: ID bilan olish
+ *     tags:
+ *       - LidStatus
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID
+ *     responses:
+ *       200:
+ *         description: Muvaffaqiyatli olindi
+ *       404:
+ *         description: Topilmadi
+ *       500: 
+ *         description: Server xatosi
+ */
+lidStatus.get("/:id", getLidStatusById)
+
+/**
+ * @swagger
+ * /lid-status/{id}:
+ *  patch:
+ *    summary: Status yangilash
+ *    tags: 
+ *      - LidStatus
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: ID   
+ *    requestBody:
+ *      required: true
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              status:
+ *                type: string
+ *    responses:
+ *      200:
+ *        description: Yangilandi
+ *      404:
+ *        description: Topilmadi
+ *      500:
+ *        description: Server xatosi
+ */
+lidStatus.patch("/:id", updateLidStatus)
+
+/**
+ * @swagger
+ * /lid-status/{id}:
+ *  delete:
+ *    summary: Status o'chirish
+ *    tags:
+ *      - LidStatus
+ *    parameters:
+ *      - in: path
+ *        name: id
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: O'chiriladigan status ID si
+ *    responses:
+ *      200:
+ *        description:  malumot o'chirildi.
+ *      404: 
+ *        description:  malumot topilmadi
+ *      500:
+ *        description: Server xatosi
+ */
+lidStatus.delete("/:id", deleteLidStatus)
 module.exports = { lidStatus }   
