@@ -10,15 +10,13 @@ const createStage = async (req, res) => {
                 success: false,
                 message: "Maydonlar to'ldirilmadi"
             })
-        } else {
-            const newStage = await Stage.create({
-                name
-            })
-            return res.status(201).json({
-                success: true,
-                message: "Stage qo'shildi"
-            })
         }
+        const newStage = await Stage.create({ name })
+        return res.status(201).json({
+            success: true,
+            message: "Stage qo'shildi",
+            newStage
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,

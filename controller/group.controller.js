@@ -17,30 +17,29 @@ const postGroup = async (req, res) => {
             is_active
         } = req.body
 
-        if (!group_name || !lesson_start_time) {
+        if (!group_name || !lesson_start_time || !branch_id || !group_stage_idint) {
             return res.status(400).json({
                 success: false,
                 message: "Majburiy maydonlar to'ldirilmadi"
             })
-        } else {
-            const newGroup = new Group({
-                group_name,
-                lesson_start_time,
-                lesson_continuous,
-                lesson_week_day,
-                group_stage_idint,
-                room_number,
-                room_floor,
-                branch_id,
-                lessons_quant,
-                is_active
-            })
-            await newGroup.save()
-            return res.status(201).json({
-                success: true,
-                message: "Group muvaffaqiyatli qo'shildi"
-            })
         }
+        const newGroup = await Group.create({
+            group_name,
+            lesson_start_time,
+            lesson_continuous,
+            lesson_week_day,
+            group_stage_idint,
+            room_number,
+            room_floor,
+            branch_id,
+            lessons_quant,
+            is_active
+        })
+        return res.status(201).json({
+            success: true,
+            message: "Group muvaffaqiyatli qo'shildi",
+            newGroup
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -52,7 +51,7 @@ const postGroup = async (req, res) => {
 // Get all groups
 const getAllGroups = async (req, res) => {
     try {
-        const groups = await Group.find().lean();
+        const groups = await Group.find().populate("branch_id").populate("group_stage_idint")
 
         if (!groups || groups.length === 0) {
             return res.status(404).json({
@@ -82,7 +81,7 @@ const getById = async (req, res) => {
     try {
         const groupId = req.params.id
 
-        const group = await Group.findById(groupId)
+        const group = await Group.findById(groupId).populate("branch_id").populate("group_stage_idint")
 
         if (!group) {
             return res.status(404).json({

@@ -11,7 +11,12 @@ const createPayment = async (req, res) => {
             is_paid,
             total_attent
         } = req.body;
-
+        if (!student_id || !payment_last_date || !payment_date || !price) {
+            return res.status(400).json({
+                success: false,
+                message: "Maydonlar to'ldirilmadi"
+            })
+        }
         const newPayment = await Payment.create({
             student_id,
             payment_last_date,

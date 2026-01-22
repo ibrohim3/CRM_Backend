@@ -5,10 +5,10 @@ const groupSchema = new Schema({
     lesson_start_time: { type: String, require: true },
     lesson_continuous: { type: String, require: true },
     lesson_week_day: { type: String, require: true },
-    group_stage_idint: { type: Number, require: true, unique: true },
+    group_stage_idint: { type: Schema.Types.ObjectId, ref: "Stage", require: true, unique: true },
     room_number: { type: String, require: true },
     room_floor: { type: Number, require: true },
-    branch_id: { type: Number, require: true },
+    branch_id: { type: Schema.Types.ObjectId, ref: "Branch", require: true },
     lessons_quant: { type: Number, require: true },
     is_active: { type: Boolean, default: true }
 })

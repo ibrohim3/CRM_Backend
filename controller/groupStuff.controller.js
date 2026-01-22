@@ -3,27 +3,21 @@ const { GroupStuff } = require("../model/groupStuffSchema")
 // Post
 const createGroupStuff = async (req, res) => {
     try {
-        const {
-            group_id,
-            stuff_id
-        } = req.body
+        const { group_id, stuff_id } = req.body
+
         if (!group_id || !stuff_id) {
             return res.status(400).json({
                 success: false,
                 message: "Maydonlar to'ldirilmadi"
             })
-        } else {
-            const newGroupStuff = new GroupStuff({
-                group_id,
-                stuff_id
-            })
-            await newGroupStuff.save()
-            return res.status(201).json({
-                success: true,
-                message: "new group staff qo'shildi",
-                data: newGroupStuff
-            })
         }
+        const newGroupStuff = await GroupStuff.create({ group_id, stuff_id })
+
+        return res.status(201).json({
+            success: true,
+            message: "New group staff yaratildi",
+            data: newGroupStuff
+        })
     } catch (error) {
         return res.status(500).json({
             succes: false,
@@ -36,7 +30,8 @@ const createGroupStuff = async (req, res) => {
 // Get all
 const getAllGroupStuff = async (req, res) => {
     try {
-        const groupStuffList = await GroupStuff.find({})
+        const groupStuffList = await GroupStuff.find().populate("group_id").populate("stuff_id")
+
         if (!groupStuffList || groupStuffList.length === 0) {
             return res.status(404).json({
                 succes: false,
@@ -61,7 +56,7 @@ const getAllGroupStuff = async (req, res) => {
 const getGroupStuff = async (req, res) => {
     try {
         const groupStuffId = req.params.id
-        const groupStuff = await GroupStuff.findById(groupStuffId)
+        const groupStuff = await GroupStuff.findById(groupStuffId).populate("group_id").populate("stuff_id")
         if (!groupStuff) {
             return res.status(404).json({
                 succes: false,

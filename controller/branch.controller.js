@@ -14,18 +14,17 @@ const createBranch = async (req, res) => {
                 success: false,
                 message: "Bu nom bilan branch mavjud."
             })
-        } else {
-            const newBrach = await Branch.create({
-                name,
-                address,
-                call_number
-            })
-            return res.status(201).json({
-                success: true,
-                message: "Branch qo'shildi",
-            })
         }
-
+        const newBranch = await Branch.create({
+            name,
+            address,
+            call_number
+        })
+        return res.status(201).json({
+            success: true,
+            message: "Branch qo'shildi",
+            newBranch
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,

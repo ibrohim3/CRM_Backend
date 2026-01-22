@@ -9,7 +9,7 @@ const createGroup = async (req, res) => {
         } = req.body
         if (!student_id || !group_id) {
             return res.status(400).json({
-                succes: false,
+                success: false,
                 message: "maydonlar to'ldirilmadi"
             })
         } else {
@@ -19,13 +19,13 @@ const createGroup = async (req, res) => {
             })
             await newStudentGroup.save()
             return res.status(201).json({
-                succes: true,
+                success: true,
                 message: "Muvaffaqiyatli"
             })
         }
     } catch (error) {
         return res.status(500).json({
-            succes: false,
+            success: false,
             message: "Server xatosi",
             error: error.message
         })
@@ -39,19 +39,19 @@ const getAll = async (req, res) => {
 
         if (!studentGroup || studentGroup.length === 0) {
             return res.status(404).json({
-                succes: false,
+                success: false,
                 message: "Hozircha student group mavjud emas."
             })
         }
         return res.status(200).json({
-            succes: true,
+            success: true,
             message: "xamma student group olindi",
             count: studentGroup.length,
             studentGroup: studentGroup
         })
     } catch (error) {
         return res.status(500).json({
-            succes: false,
+            success: false,
             message: "Server xatosi",
             error: error.message
         })
@@ -67,18 +67,18 @@ const getById = async (req, res) => {
 
         if (!studentGroup) {
             return res.status(404).json({
-                succes: false,
+                success: false,
                 message: "Student Group topilmadi"
             })
         }
         return res.status(200).json({
-            succes: true,
+            success: true,
             message: "Student group topilid",
             data: studentGroup
         })
     } catch (error) {
         return res.status(500).json({
-            succes: false,
+            success: false,
             message: "Server xatosi, ", error
         })
     }
@@ -102,18 +102,18 @@ const studentGroupUpdate = async (req, res) => {
         )
         if (!updatedStudentGroup) {
             return res.status(404).json({
-                succes: false,
+                success: false,
                 message: "Student Group topilmadi"
             })
         }
         return res.status(200).json({
-            succes: true,
+            success: true,
             message: "yangilandi",
             updated: updatedStudentGroup
         })
     } catch (error) {
         return res.status(500).json({
-            succes: false,
+            success: false,
             message: "Server xatosi: ",
             error: error.message
         })
@@ -128,18 +128,18 @@ const studentGroupDelete = async (req, res) => {
 
         if (!deletedStudentGroup) {
             return res.status(404).json({
-                succes: false,
+                success: false,
                 message: "Topilmadi"
             })
         }
         return res.status(200).json({
-            succes: true,
+            success: true,
             message: "O'chirildi",
             deleted: deletedStudentGroup
         })
     } catch (error) {
         return res.status(500).json({
-            succes: false,
+            success: false,
             message: "Server xatosi",
             error: error.message
         })
