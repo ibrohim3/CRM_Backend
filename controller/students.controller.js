@@ -158,41 +158,10 @@ const deleteStudent = async (req, res) => {
     }
 }
 
-// Search
-const searchStudent = async (req, res) => {
-    try {
-        const { q } = req.query
-
-        if (!q || typeof q !== "string") {
-            return res.status(400).json({
-                success: false,
-                message: "Qidiruv so'rovi noto'g'ri."
-            })
-        }
-        const results = await Students.find({
-            $or: [
-                { first_name: { $regex: q, $options: "i" } }
-            ]
-        })
-        return res.status(200).json({
-            success: true,
-            count: results.length,
-            results
-        });
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server xatosi",
-            error: error.message
-        })
-    }
-}
-
 module.exports = {
     postStudent,
     getAllStudents,
     getById,
     updateStudent,
     deleteStudent,
-    searchStudent
 }
