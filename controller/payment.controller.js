@@ -45,7 +45,12 @@ const createPayment = async (req, res) => {
 const getPayments = async (req, res) => {
     try {
         const payments = await Payment.find().populate("student_id")
-
+        if (!payments) {
+            return res.status(404).json({
+                success: false,
+                message: "not found"
+            })
+        }
         return res.status(200).json({
             success: true,
             payments
