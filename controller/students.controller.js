@@ -40,9 +40,9 @@ const postStudent = async (req, res) => {
 const getAllStudents = async (req, res) => {
     try {
 
-        const student = await Students.find({})
+        const students = await Students.find().populate("lid_id")
 
-        if (!student || student.length === 0) {
+        if (!students || students.length === 0) {
             return res.status(404).json({
                 success: false,
                 message: "Hozircha o'quvchilar mavjud emas"
@@ -51,8 +51,8 @@ const getAllStudents = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Barcha o'quvchilar ro'yxati olindi",
-            count: student.length,
-            data: student
+            count: students.length,
+            data: students
         })
     } catch (error) {
         console.error("Get All Students error:", error);
@@ -67,7 +67,7 @@ const getAllStudents = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const studentId = req.params.id
-        const student = await Students.findById(studentId)
+        const student = await Students.findById(studentId).populate("lid_id")
 
         if (!student) {
             return res.status(404).json({

@@ -10,19 +10,15 @@ const createGroup = async (req, res) => {
         if (!student_id || !group_id) {
             return res.status(400).json({
                 success: false,
-                message: "maydonlar to'ldirilmadi"
-            })
-        } else {
-            const newStudentGroup = new StudentGroup({
-                student_id,
-                group_id
-            })
-            await newStudentGroup.save()
-            return res.status(201).json({
-                success: true,
-                message: "Muvaffaqiyatli"
+                message: "Maydonlar to'ldirilmadi"
             })
         }
+        const newStudentGroup = await StudentGroup.create({ student_id, group_id })
+        return res.status(201).json({
+            success: true,
+            message: "Muvaffaqiyatli",
+            newStudentGroup
+        })
     } catch (error) {
         return res.status(500).json({
             success: false,
@@ -35,7 +31,7 @@ const createGroup = async (req, res) => {
 // Get all
 const getAll = async (req, res) => {
     try {
-        const studentGroup = await StudentGroup.find({})
+        const studentGroup = await StudentGroup.find().populate("student_id").populate("group_id")
 
         if (!studentGroup || studentGroup.length === 0) {
             return res.status(404).json({
@@ -63,7 +59,7 @@ const getById = async (req, res) => {
     try {
         const studentGroupId = req.params.id
 
-        const studentGroup = await StudentGroup.findById(studentGroupId)
+        const studentGroup = await StudentGroup.findById(studentGroupId).populate("student_id").populate("group_id")
 
         if (!studentGroup) {
             return res.status(404).json({

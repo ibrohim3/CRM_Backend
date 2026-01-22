@@ -10,10 +10,10 @@ const stLessonCreate = async (req, res) => {
             reason,
             be_paid
         } = req.body
-        if (!lesson_id || !student_id) {
+        if (!lesson_id || !student_id || !is_there || !reason || !be_paid) {
             return res.status(400).json({
                 success: false,
-                message: "maydonlar to'ldirilmadi"
+                message: "Maydonlar to'ldirilmadi"
             })
         } else {
             const newStLesson = new StudentLesson({
@@ -26,7 +26,8 @@ const stLessonCreate = async (req, res) => {
             await newStLesson.save()
             return res.status(201).json({
                 success: true,
-                message: "Muvaffaqiyatli qo'shildi"
+                message: "Muvaffaqiyatli qo'shildi",
+                newStLesson
             })
         }
     } catch (error) {
@@ -41,7 +42,7 @@ const stLessonCreate = async (req, res) => {
 // Get All Student Lesson
 const getAllStudentLesson = async (req, res) => {
     try {
-        const studentLessons = await StudentLesson.find({})
+        const studentLessons = await StudentLesson.find().populate("lesson_id").populate("student_id")
         if (!studentLessons || !studentLessons.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -67,7 +68,7 @@ const getAllStudentLesson = async (req, res) => {
 const getByIdStLesson = async (req, res) => {
     try {
         const studentLessonId = req.params.id
-        const studentLesson = await StudentLesson.findById(studentLessonId)
+        const studentLesson = await StudentLesson.findById(studentLessonId).populate("lesson_id").populate("student_id")
 
         if (!studentLesson) {
             return res.status(404).json({

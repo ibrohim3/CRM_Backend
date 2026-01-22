@@ -15,7 +15,7 @@ const createLid = async (req, res) => {
             lid_status_id,
             cancel_reson_id
         } = req.body
-        if (!first_name || !phone_number) {
+        if (!first_name || !phone_number || !lid_stage_id || !test_date || !trial_lesson_group_id || !lid_status_id || !cancel_reson_id) {
             return res.status(400).json({
                 success: false,
                 message: "Maydonlar to'ldirilmadi"
@@ -52,7 +52,7 @@ const createLid = async (req, res) => {
 // Get All
 const getAll = async (req, res) => {
     try {
-        const lid = await Lid.find({})
+        const lid = await Lid.find().populate("lid_stage_id").populate("trial_lesson_group_id").populate("lid_status_id").populate("cancel_reson_id")
         if (!lid || lid.length === 0) {
             return res.status(404).json({
                 success: false,
@@ -78,7 +78,7 @@ const getAll = async (req, res) => {
 const getByIdLid = async (req, res) => {
     try {
         const lidId = req.params.id
-        const lid = await Lid.findById(lidId)
+        const lid = await Lid.findById(lidId).populate("lid_stage_id").populate("trial_lesson_group_id").populate("lid_status_id").populate("cancel_reson_id")
 
         if (!lid) {
             return res.status(404).json({

@@ -1,7 +1,7 @@
 const Joi = require("joi")
 
 const createStudentsValidate = Joi.object({
-    lid_id: Joi.number().integer().positive().required(),
+    lid_id: Joi.string().required(),
     first_name: Joi.string().trim().min(3).max(30).required(),
     last_name: Joi.string().trim().required(),
     phone_number: Joi.string().pattern(/^\+998\d{9}$/).required(),
@@ -10,7 +10,7 @@ const createStudentsValidate = Joi.object({
 })
 
 const updateStudentsValidate = Joi.object({
-    lid_id: Joi.number().integer().positive().optional(),
+    lid_id: Joi.string().optional(),
     first_name: Joi.string().trim().min(3).max(30).optional(),
     last_name: Joi.string().trim().optional(),
     phone_number: Joi.string().pattern(/^\+998\d{9}$/).optional(),

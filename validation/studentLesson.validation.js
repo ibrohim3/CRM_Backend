@@ -1,24 +1,8 @@
 const Joi = require("joi")
 
 const createStudentLessonValidation = Joi.object({
-    lesson_id: Joi.number()
-        .integer()
-        .positive()
-        .required()
-        .messages({
-            "number.base": "Student ID raqam bo‘lishi kerak",
-            "number.integer": "Student ID butun raqam bo‘lishi kerak",
-            "number.positive": "Student ID musbat bo‘lishi kerak"
-        }),
-    student_id: Joi.number()
-        .integer()
-        .positive()
-        .required()
-        .messages({
-            "number.base": "Student ID raqam bo‘lishi kerak",
-            "number.integer": "Student ID butun raqam bo‘lishi kerak",
-            "number.positive": "Student ID musbat bo‘lishi kerak"
-        }),
+    lesson_id: Joi.string().required(),
+    student_id: Joi.string().required(),
     is_there: Joi.boolean().default(true),
     reason: Joi.string().min(3).required(),
     be_paid: Joi.boolean().default(true)
@@ -26,24 +10,8 @@ const createStudentLessonValidation = Joi.object({
 
 
 const updateStudentLessonValidation = Joi.object({
-    lesson_id: Joi.number()
-        .integer()
-        .positive()
-        .optional()
-        .messages({
-            "number.base": "Student ID raqam bo‘lishi kerak",
-            "number.integer": "Student ID butun raqam bo‘lishi kerak",
-            "number.positive": "Student ID musbat bo‘lishi kerak"
-        }),
-    student_id: Joi.number()
-        .integer()
-        .positive()
-        .optional()
-        .messages({
-            "number.base": "Student ID raqam bo‘lishi kerak",
-            "number.integer": "Student ID butun raqam bo‘lishi kerak",
-            "number.positive": "Student ID musbat bo‘lishi kerak"
-        }),
+    lesson_id: Joi.string().optional(),
+    student_id: Joi.string().optional(),
     is_there: Joi.boolean().default(true),
     reason: Joi.string().min(3).required(),
     be_paid: Joi.boolean().default(true)

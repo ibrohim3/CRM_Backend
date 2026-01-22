@@ -25,7 +25,8 @@ const postLesson = async (req, res) => {
             await newLesson.save()
             return res.status(201).json({
                 succes: true,
-                message: "Lesson qo'shildi"
+                message: "Lesson qo'shildi",
+                newLesson
             })
         }
     } catch (error) {
@@ -39,7 +40,7 @@ const postLesson = async (req, res) => {
 // get all
 const getAll = async (req, res) => {
     try {
-        const lessons = await Lesson.find({})
+        const lessons = await Lesson.find().populate("group_id")
 
         if (!lessons || lessons.length === 0) {
             return res.status(404).json({
@@ -66,7 +67,7 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
     try {
         const lessonId = req.params.id
-        const lesson = await Lesson.findById(lessonId)
+        const lesson = await Lesson.findById(lessonId).populate("group_id")
 
         if (!lesson) {
             return res.status(404).json({
