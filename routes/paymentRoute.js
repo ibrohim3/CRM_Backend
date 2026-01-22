@@ -11,9 +11,9 @@ const { validate } = require("../middlewares/validate")
 const { createPaymentValidation, updatePaymentValidation } = require("../validation/payment.validation")
 const { idParamValidationSchema } = require("../validation/common.validation.js")
 
-payment.post("/register", validate(createPaymentValidation, "body"), createPayment)
+payment.post("/", validate(createPaymentValidation, "body"), createPayment)
 payment.get("/", getPayments)
-payment.get("/byId/:id", validate(idParamValidationSchema, "params"), getPayment)
-payment.patch("/update/:id", validate(updatePaymentValidation, "body"), updatePayment)
-payment.delete("/delete/:id", validate(idParamValidationSchema, "params"), deletePayment)
+payment.get("/:id", validate(idParamValidationSchema, "params"), getPayment)
+payment.patch("/:id", validate(updatePaymentValidation, "body"), updatePayment)
+payment.delete("/:id", validate(idParamValidationSchema, "params"), deletePayment)
 module.exports = { payment }

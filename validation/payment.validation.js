@@ -1,7 +1,7 @@
 const Joi = require("joi")
 
 const createPaymentValidation = Joi.object({
-    student_id: Joi.number().integer().positive().required(),
+    student_id: Joi.string().length(24).hex().required(),
     payment_last_date: Joi.date().required(),
     payment_date: Joi.date().greater("now").required().messages({
         "any.required": "Lesson date is required",
@@ -13,7 +13,7 @@ const createPaymentValidation = Joi.object({
 })
 
 const updatePaymentValidation = Joi.object({
-    student_id: Joi.number().integer().positive().optional(),
+    student_id: Joi.string().length(24).hex().optional(),
     payment_last_date: Joi.date().optional(),
     payment_date: Joi.date().greater("now").optional().messages({
         "any.required": "Lesson date is required",

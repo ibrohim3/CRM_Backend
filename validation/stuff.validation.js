@@ -12,7 +12,7 @@ const createStuffValidation = Joi.object({
         .pattern(
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/
         ),
-    is_active: Joi.boolean().default(true)
+    is_active: Joi.boolean().default(false)
 })
 
 const updateStuffValidation = Joi.object({
@@ -27,7 +27,7 @@ const updateStuffValidation = Joi.object({
         .pattern(
             /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/
         ),
-    is_active: Joi.boolean().default(true)
+    is_active: Joi.boolean().default(false)
 })
 
 module.exports = { createStuffValidation, updateStuffValidation }

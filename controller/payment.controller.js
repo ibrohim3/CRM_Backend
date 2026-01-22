@@ -11,7 +11,7 @@ const createPayment = async (req, res) => {
             is_paid,
             total_attent
         } = req.body;
-        if (!student_id || !payment_last_date || !payment_date || !price) {
+        if (!student_id || !payment_last_date || !payment_date || !price || !is_paid || !total_attent) {
             return res.status(400).json({
                 success: false,
                 message: "Maydonlar to'ldirilmadi"
@@ -29,7 +29,7 @@ const createPayment = async (req, res) => {
         return res.status(201).json({
             success: true,
             message: "Payment qo'shildi",
-            data: newPayment
+            newPayment
         });
 
     } catch (error) {
@@ -44,11 +44,11 @@ const createPayment = async (req, res) => {
 // GET ALL
 const getPayments = async (req, res) => {
     try {
-        const payments = await Payment.find().sort({ createdAt: -1 });
+        const payments = await Payment.find().populate("student_id")
 
         return res.status(200).json({
             success: true,
-            data: payments
+            payments
         });
 
     } catch (error) {
@@ -65,7 +65,7 @@ const getPayment = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const payment = await Payment.findById(id);
+        const payment = await Payment.findById(id).populate("student_id")
 
         if (!payment) {
             return res.status(404).json({
@@ -76,7 +76,7 @@ const getPayment = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            data: payment
+            payment
         });
 
     } catch (error) {
@@ -92,23 +92,22 @@ const getPayment = async (req, res) => {
 const updatePayment = async (req, res) => {
     try {
         const { id } = req.params;
-
-        const allowed = [
-            "student_id",
-            "payment_last_date",
-            "payment_date",
-            "price",
-            "is_paid",
-            "total_attent"
-        ];
-
-        const updateData = {};
-        for (const key of allowed) {
-            if (req.body[key] !== undefined) {
-                updateData[key] = req.body[key];
-            }
+        const {
+            student_id,
+            payment_last_date,
+            payment_date,
+            price,
+            is_paid,
+            total_attent
+        } = req.body
+        const updateData = {
+            student_id,
+            payment_last_date,
+            payment_date,
+            price,
+            is_paid,
+            total_attent
         }
-
         const updated = await Payment.findByIdAndUpdate(
             id,
             updateData,
