@@ -154,44 +154,10 @@ const deleteLesson = async (req, res) => {
     }
 }
 
-// Search
-const searchLesson = async (req, res) => {
-    try {
-        const { q } = req.query;
-
-        if (!q || typeof q !== "string") {
-            return res.status(400).json({
-                success: false,
-                message: "Qidiruv so'rovi noto'g'ri."
-            });
-        }
-
-        const results = await Lesson.find({
-            $or: [
-                { lesson_theme: { $regex: q, $options: "i" } }
-            ]
-        });
-
-        return res.status(200).json({
-            success: true,
-            message: "Topildi",
-            count: results.length,
-            results
-        });
-
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server xatosi",
-            error: error.message
-        });
-    }
-};
 module.exports = {
     postLesson,
     getAll,
     getById,
     updateLesson,
     deleteLesson,
-    searchLesson
 }

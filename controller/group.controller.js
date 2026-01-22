@@ -180,42 +180,10 @@ const deleteGroup = async (req, res) => {
     }
 }
 
-// Search group
-const searchGroup = async (req, res) => {
-    try {
-        const { query } = req.query
-
-        if (!query || typeof query !== "string") {
-            return res.status(400).json({
-                success: false,
-                message: "Qidiruv so'rovi noto'g'ri."
-            });
-
-        }
-        const results = await Group.find({
-            $or: [
-                { group_name: { $regex: query, $options: "i" } }
-            ]
-        })
-
-        return res.status(200).json({
-            success: true,
-            count: results.length,
-            results
-        });
-    } catch (error) {
-        console.error("Error searching group: ", error);
-        return res.status(500).json({
-            success: false,
-            message: "Server xatosi"
-        });
-    }
-}
 module.exports = {
     postGroup,
     getAllGroups,
     getById,
     updateGroup,
     deleteGroup,
-    searchGroup
 }

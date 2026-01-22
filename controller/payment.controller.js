@@ -118,14 +118,12 @@ const updatePayment = async (req, res) => {
             updateData,
             { new: true }
         );
-
         if (!updated) {
             return res.status(404).json({
                 success: false,
                 message: "Payment topilmadi"
             });
         }
-
         return res.status(200).json({
             success: true,
             message: "Yangilandi",

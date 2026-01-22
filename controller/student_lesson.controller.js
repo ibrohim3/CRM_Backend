@@ -94,42 +94,31 @@ const getByIdStLesson = async (req, res) => {
 const updateStLesson = async (req, res) => {
     try {
         const { id } = req.params;
-
-        const allowedFields = [
-            "lesson_id",
-            "student_id",
-            "is_there",
-            "reason",
-            "be_paid"
-        ];
-
-        const updateData = {};
-        for (const key of allowedFields) {
-            if (req.body[key] !== undefined) {
-                updateData[key] = req.body[key];
-            }
+        const {
+            lesson_id,
+            student_id,
+            is_there,
+            reason,
+            be_paid
+        } = req.body
+        const updateData = {
+            lesson_id,
+            student_id,
+            is_there,
+            reason,
+            be_paid
         }
-
-        if (Object.keys(updateData).length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Yangilanish uchun hech qanday ma’lumot kelmadi"
-            });
-        }
-
         const updatedStLesson = await StudentLesson.findByIdAndUpdate(
             id,
             updateData,
             { new: true }
         );
-
         if (!updatedStLesson) {
             return res.status(404).json({
                 success: false,
                 message: "Student Lesson topilmadi"
             });
         }
-
         return res.status(200).json({
             success: true,
             message: "Muvaffaqiyatli yangilandi",

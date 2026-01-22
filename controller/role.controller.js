@@ -140,46 +140,10 @@ const deleteRole = async (req, res) => {
     }
 }
 
-// Search
-const searchRole = async (req, res) => {
-    try {
-        const { q } = req.query
-        if (!q || typeof q !== "string") {
-            return res.status(400).json({
-                success: false,
-                message: "Qidiruv so'rovi noto'g'ri"
-            })
-        }
-        const results = await Role.find({
-            $or: [
-                { name: { $regex: q.trim(), $options: "i" } }
-            ]
-        })
-        if (!results || results.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "So'rov bo'yicha xechnima topilmadi."
-            })
-        }
-        return res.status(200).json({
-            success: true,
-            message: "Topildi",
-            count: results.length,
-            data: results
-        })
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: " Server xatosi",
-            error: error.message
-        })
-    }
-}
 module.exports = {
     postRole,
     getRoles,
     getOneRole,
     updateRole,
     deleteRole,
-    searchRole
 }
